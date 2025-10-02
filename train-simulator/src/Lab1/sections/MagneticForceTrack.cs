@@ -12,9 +12,9 @@ public sealed record MagneticForceTrack : ITrackSection
         Force = force;
     }
 
-    public Length Length { get;  }
+    public Length Length { get; }
 
-    public Force Force { get;  }
+    public Force Force { get; }
 
     public SectionResult DriveSection(Train train)
     {
