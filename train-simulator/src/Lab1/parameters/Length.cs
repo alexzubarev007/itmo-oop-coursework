@@ -17,6 +17,11 @@ public sealed record Length
         return new Length(speed.Value * time.Value);
     }
 
+    public Length Duplicate()
+    {
+        return new Length(Value);
+    }
+
     public double Value { get; }
 
     public static Length operator +(Length left, Length right) =>

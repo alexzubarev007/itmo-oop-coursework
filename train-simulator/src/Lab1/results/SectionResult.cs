@@ -12,5 +12,5 @@ public abstract record SectionResult
 
     public sealed record SpeedLimitBroken(Speed SpeedLimit) : SectionResult { }
 
-    public sealed record PrematureStop : SectionResult { }
+    public sealed record MovementFailure(DistanceResult DistanceFailure) : SectionResult { }
 }

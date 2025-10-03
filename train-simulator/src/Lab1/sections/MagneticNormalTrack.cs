@@ -15,6 +15,12 @@ public sealed record MagneticNormalTrack : ITrackSection
 
     public SectionResult DriveSection(Train train)
     {
-        return train.DriveDistance(Length);
+        DistanceResult distanceResult = train.DriveUniformMotion(Length);
+
+        return distanceResult switch
+        {
+            DistanceResult.Success success => new SectionResult.Success(success.TotalTime),
+            _ => new SectionResult.MovementFailure(distanceResult),
+        };
     }
 }
