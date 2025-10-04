@@ -1,5 +1,5 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
-using Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
+﻿using Itmo.ObjectOrientedProgramming.Lab1.Errors;
+using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Sections;
 
@@ -18,7 +18,7 @@ public sealed class Station : ITrackSection
 
     public Time DisembarkationTime { get; }
 
-    public SectionResult DriveSection(Train train)
+    public SectionResult PassSection(Train train)
     {
         if (train.Speed > MaxSpeed)
         {

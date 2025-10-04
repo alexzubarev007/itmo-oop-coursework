@@ -22,7 +22,7 @@ public class Train
 
     public Speed Speed { get; private set; }
 
-    public DistanceResult DriveDistance(Length distance)
+    public TrainResult PassDistance(Length distance)
     {
         Length remainingDistance = distance.Duplicate();
         var totalTime = new Time(0);
@@ -33,10 +33,10 @@ public class Train
 
             if (Speed.IsNegativeOrZero() && _acceleration.IsNegativeOrZero())
             {
-                return new DistanceResult.PrematureStop();
+                return new TrainResult.PrematureStop();
             }
 
-            Length step = remainingDistance.Create(Speed, _deltaTime);
+            var step = Length.Create(Speed, _deltaTime);
             totalTime += _deltaTime;
 
             if (remainingDistance < step)
@@ -47,27 +47,22 @@ public class Train
             remainingDistance -= step;
         }
 
-        return new DistanceResult.Success(totalTime);
+        return new TrainResult.Success(totalTime);
     }
 
     public bool TryRecalculateAcceleration(Force externalForce)
     {
-        if (!IsForceInLimit(externalForce))
+        if (externalForce.GetAbs() > MaxForce)
         {
             return false;
         }
 
-        _acceleration = _acceleration.Create(externalForce, _mass);
+        _acceleration = Acceleration.Create(externalForce, _mass);
         return true;
     }
 
-    public void SetAccelerationZero()
+    public void RecalculateWithoutForce()
     {
         _acceleration = new Acceleration(0);
-    }
-
-    private bool IsForceInLimit(Force force)
-    {
-        return !(force.GetAbs() > MaxForce);
     }
 }

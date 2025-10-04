@@ -1,5 +1,5 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
-using Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
+﻿using Itmo.ObjectOrientedProgramming.Lab1.Errors;
+using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Sections;
 
@@ -15,19 +15,19 @@ public sealed class MagneticForceTrack : ITrackSection
 
     public Force Force { get; }
 
-    public SectionResult DriveSection(Train train)
+    public SectionResult PassSection(Train train)
     {
         if (!train.TryRecalculateAcceleration(Force))
         {
             return new SectionResult.Failure(new ForceLimitError(train.MaxForce));
         }
 
-        DistanceResult distanceResult = train.DriveDistance(Length);
+        TrainResult distanceResult = train.PassDistance(Length);
 
         return distanceResult switch
         {
-            DistanceResult.Success success => new SectionResult.Success(success.TotalTime),
-            _ => new SectionResult.Failure(new DistanceError()),
+            TrainResult.Success success => new SectionResult.Success(success.TotalTime),
+            _ => new SectionResult.Failure(new MovementError()),
         };
     }
 }

@@ -2,5 +2,5 @@
 
 public interface ITrackSection
 {
-    SectionResult DriveSection(Train train);
+    SectionResult PassSection(Train train);
 }

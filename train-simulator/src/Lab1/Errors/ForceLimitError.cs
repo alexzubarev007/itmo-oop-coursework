@@ -1,8 +1,8 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Errors;
 
-public sealed record ForceLimitError(Force Limit) : ISectionErrors
+public sealed record ForceLimitError(Force Limit) : IError
 {
     public string Message()
     {

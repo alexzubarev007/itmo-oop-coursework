@@ -7,7 +7,7 @@ public sealed record Speed
         Value = value;
     }
 
-    public Speed Create(Acceleration acceleration, Time time)
+    public static Speed Create(Acceleration acceleration, Time time)
     {
         return new Speed(acceleration.Value * time.Value);
     }

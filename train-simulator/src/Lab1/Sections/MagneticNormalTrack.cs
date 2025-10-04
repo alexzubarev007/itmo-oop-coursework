@@ -1,5 +1,5 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
-using Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
+﻿using Itmo.ObjectOrientedProgramming.Lab1.Errors;
+using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Sections;
 
@@ -12,16 +12,14 @@ public sealed class MagneticNormalTrack : ITrackSection
 
     public Length Length { get; }
 
-    public SectionResult DriveSection(Train train)
+    public SectionResult PassSection(Train train)
     {
-        train.SetAccelerationZero();
+        TrainResult trainResult = train.PassDistance(Length);
 
-        DistanceResult distanceResult = train.DriveDistance(Length);
-
-        return distanceResult switch
+        return trainResult switch
         {
-            DistanceResult.Success success => new SectionResult.Success(success.TotalTime),
-            _ => new SectionResult.Failure(new DistanceError()),
+            TrainResult.Success success => new SectionResult.Success(success.TotalTime),
+            _ => new SectionResult.Failure(new MovementError()),
         };
     }
 }

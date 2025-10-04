@@ -1,10 +1,10 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
+﻿using Itmo.ObjectOrientedProgramming.Lab1.Errors;
+using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 using Itmo.ObjectOrientedProgramming.Lab1.Sections;
-using Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
-public record Route
+public class Route
 {
     private readonly List<ITrackSection> _sections;
 
@@ -22,20 +22,27 @@ public record Route
 
         foreach (ITrackSection section in _sections)
         {
-            SectionResult sectionResult = section.DriveSection(train);
-            switch (sectionResult)
+            if (section is MagneticNormalTrack)
             {
-                case SectionResult.Success success:
-                    totalTime += success.Time;
-                    break;
-                default:
-                    return new RouteResult.Failure(sectionResult);
+                train.RecalculateWithoutForce();
+            }
+
+            SectionResult sectionResult = section.PassSection(train);
+
+            if (sectionResult is SectionResult.Success success)
+            {
+                totalTime += success.Time;
+            }
+
+            if (sectionResult is SectionResult.Failure failure)
+            {
+                return new RouteResult.Failure(failure.Error);
             }
         }
 
         if (train.Speed > MaxFinalSpeed)
         {
-            return new RouteResult.Failure(new SectionResult.Failure(new SpeedLimitError(MaxFinalSpeed)));
+            return new RouteResult.Failure(new SpeedLimitError(MaxFinalSpeed));
         }
 
         return new RouteResult.Success(totalTime);

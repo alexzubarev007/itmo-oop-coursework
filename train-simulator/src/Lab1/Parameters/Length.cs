@@ -12,7 +12,7 @@ public sealed record Length
         Value = value;
     }
 
-    public Length Create(Speed speed, Time time)
+    public static Length Create(Speed speed, Time time)
     {
         return new Length(speed.Value * time.Value);
     }

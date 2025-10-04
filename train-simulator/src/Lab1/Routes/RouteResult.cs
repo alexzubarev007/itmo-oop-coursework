@@ -1,5 +1,5 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
-using Itmo.ObjectOrientedProgramming.Lab1.Sections;
+﻿using Itmo.ObjectOrientedProgramming.Lab1.Errors;
+using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
@@ -9,5 +9,5 @@ public abstract record RouteResult
 
     public sealed record Success(Time TotalTime) : RouteResult;
 
-    public sealed record Failure(SectionResult FailedSection) : RouteResult;
+    public sealed record Failure(IError FailedSection) : RouteResult;
 }

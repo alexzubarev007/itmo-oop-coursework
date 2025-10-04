@@ -9,7 +9,7 @@ public sealed record Acceleration
         Value = value;
     }
 
-    public Acceleration Create(Force force, Mass mass)
+    public static Acceleration Create(Force force, Mass mass)
     {
         return new Acceleration(force.Value / mass.Value);
     }
