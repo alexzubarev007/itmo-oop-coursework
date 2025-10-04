@@ -24,9 +24,9 @@ public sealed record MagneticForceTrack : ITrackSection
         DistanceResult distanceResult = train.DriveUniformlyAccelerated(Length, Force);
 
         return distanceResult switch
-            {
-                DistanceResult.Success success => new SectionResult.Success(success.TotalTime),
-                _ => new SectionResult.MovementFailure(distanceResult),
-            };
+        {
+            DistanceResult.Success success => new SectionResult.Success(success.TotalTime),
+            _ => new SectionResult.MovementFailure(distanceResult),
+        };
     }
 }
