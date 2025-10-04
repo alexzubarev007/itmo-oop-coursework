@@ -1,6 +1,6 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Results;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Sections;
 
 public abstract record SectionResult
 {

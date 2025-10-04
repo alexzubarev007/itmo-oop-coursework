@@ -1,5 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
-using Itmo.ObjectOrientedProgramming.Lab1.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Sections;
 using Xunit;
 

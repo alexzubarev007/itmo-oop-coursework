@@ -1,6 +1,7 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
+using Itmo.ObjectOrientedProgramming.Lab1.Sections;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Results;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
 public abstract record RouteResult
 {
