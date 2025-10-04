@@ -1,4 +1,5 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
+using Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Sections;
 
@@ -8,9 +9,5 @@ public abstract record SectionResult
 
     public sealed record Success(Time Time) : SectionResult { }
 
-    public sealed record ForceLimitBroken(Force ForceLimit) : SectionResult { }
-
-    public sealed record SpeedLimitBroken(Speed SpeedLimit) : SectionResult { }
-
-    public sealed record MovementFailure(DistanceResult DistanceFailure) : SectionResult { }
+    public sealed record Failure(ISectionErrors Error) : SectionResult { }
 }

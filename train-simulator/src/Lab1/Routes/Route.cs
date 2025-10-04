@@ -1,5 +1,6 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
 using Itmo.ObjectOrientedProgramming.Lab1.Sections;
+using Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
@@ -34,7 +35,7 @@ public record Route
 
         if (train.Speed > MaxFinalSpeed)
         {
-            return new RouteResult.Failure(new SectionResult.SpeedLimitBroken(MaxFinalSpeed));
+            return new RouteResult.Failure(new SectionResult.Failure(new SpeedLimitError(MaxFinalSpeed)));
         }
 
         return new RouteResult.Success(totalTime);

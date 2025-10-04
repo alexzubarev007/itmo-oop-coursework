@@ -1,8 +1,9 @@
 ﻿using Itmo.ObjectOrientedProgramming.Lab1.Parameters;
+using Itmo.ObjectOrientedProgramming.Lab1.Sections.Errors;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Sections;
 
-public sealed record Station : ITrackSection
+public sealed class Station : ITrackSection
 {
     public Station(Speed maxSpeed, Time boardingTime, Time disembarkationTime)
     {
@@ -21,7 +22,7 @@ public sealed record Station : ITrackSection
     {
         if (train.Speed > MaxSpeed)
         {
-            return new SectionResult.SpeedLimitBroken(MaxSpeed);
+            return new SectionResult.Failure(new SpeedLimitError(MaxSpeed));
         }
 
         return new SectionResult.Success(BoardingTime + DisembarkationTime);
