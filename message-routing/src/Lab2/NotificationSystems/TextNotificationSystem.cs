@@ -6,7 +6,7 @@ public class TextNotificationSystem : INotificationSystem
 
     public TextNotificationSystem(string notification)
     {
-       _notification = notification;
+        _notification = notification;
     }
 
     public void Notify()
