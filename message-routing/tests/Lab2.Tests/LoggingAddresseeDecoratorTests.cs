@@ -13,8 +13,7 @@ public class LoggingAddresseeDecoratorTests
         // arrange
         var message = new Message("Random Header", "Random Text", ImportanceLevel.Medium);
         IAddressee addressee = Substitute.For<IAddressee>();
-        int logWrittenCount = 0;
-        Action<string> logger = writer => logWrittenCount++;
+        ILogger logger = Substitute.For<ILogger>();
 
         var messagesLogger = new LoggingAddresseeDecorator(addressee, logger);
 
@@ -22,7 +21,7 @@ public class LoggingAddresseeDecoratorTests
         messagesLogger.Accept(message);
 
         // assert
-        Assert.Equal(1, logWrittenCount);
+        logger.Received(1).Log($"Message with header:{message.Header} accepted");
         addressee.Received(1).Accept(Arg.Any<Message>());
     }
 }

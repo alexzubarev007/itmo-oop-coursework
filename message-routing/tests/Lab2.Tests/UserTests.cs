@@ -30,7 +30,7 @@ public class UserTests
         // act
         user.Accept(message);
 
-        ReadStatus status = user.GetReadStatus(message);
+        ReadStatus? status = user.GetReadStatus(message);
 
         user.MarkAsRead(message);
 
@@ -48,10 +48,12 @@ public class UserTests
 
         // act
         user.Accept(message);
-        user.MarkAsRead(message);
+
+        UserResult firstResult = user.MarkAsRead(message);
+        UserResult secondResult = user.MarkAsRead(message);
 
         // assert
-        Exception exception = Assert.Throws<InvalidOperationException>(() => user.MarkAsRead(message));
-        Assert.Equal("Try to mark as read already read message", exception.Message);
+        Assert.IsType<UserResult.Success>(firstResult);
+        Assert.IsType<UserResult.Failure>(secondResult);
     }
 }

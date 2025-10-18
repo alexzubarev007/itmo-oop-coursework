@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab2.Messages;
+using Itmo.ObjectOrientedProgramming.Lab2.Users.Errors;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Users;
 
@@ -13,29 +14,34 @@ public class User
 
     public void Accept(Message message)
     {
-        _statuses[message] = ReadStatus.Unread;
+        if (!_statuses.ContainsKey(message))
+        {
+            _statuses[message] = ReadStatus.Unread;
+        }
     }
 
-    public void MarkAsRead(Message message)
+    public UserResult MarkAsRead(Message message)
     {
         if (!_statuses.TryGetValue(message, out ReadStatus status))
         {
-            throw new InvalidOperationException("No such message");
+            return new UserResult.Failure(new FindError());
         }
 
         if (status == ReadStatus.Read)
         {
-            throw new InvalidOperationException("Try to mark as read already read message");
+            return new UserResult.Failure(new MarkReadError());
         }
 
         _statuses[message] = ReadStatus.Read;
+
+        return new UserResult.Success();
     }
 
-    public ReadStatus GetReadStatus(Message message)
+    public ReadStatus? GetReadStatus(Message message)
     {
         if (!_statuses.TryGetValue(message, out ReadStatus status))
         {
-            throw new InvalidOperationException("No such message");
+            return null;
         }
 
         return status;

@@ -6,11 +6,11 @@ public class ConsoleFormatter : IFormatter
 {
     public void WriteHeader(Message message)
     {
-        Console.WriteLine(message.Header + "\n");
+        Console.WriteLine(message.Header);
     }
 
     public void WriteBody(Message message)
     {
-        Console.WriteLine(message.Body + "\n");
+        Console.WriteLine(message.Body);
     }
 }
