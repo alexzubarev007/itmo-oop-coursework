@@ -20,7 +20,7 @@ public class FormattingArchiverTests
         formattingArchiver.Store(message);
 
         // assert
-        formatter.Received(1).WriteHeader(message);
-        formatter.Received(1).WriteBody(message);
+        formatter.Received(1).WriteHeader(message.Header);
+        formatter.Received(1).WriteBody(message.Body);
     }
 }

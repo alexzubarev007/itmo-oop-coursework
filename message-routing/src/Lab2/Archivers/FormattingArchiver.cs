@@ -14,7 +14,7 @@ public class FormattingArchiver : IArchiver
 
     public void Store(Message message)
     {
-        _formatter.WriteHeader(message);
-        _formatter.WriteBody(message);
+        _formatter.WriteHeader(message.Header);
+        _formatter.WriteBody(message.Body);
     }
 }

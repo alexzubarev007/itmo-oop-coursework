@@ -1,18 +1,16 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab2.Messages;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2.NotificationSystems;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.NotificationSystems;
 
 public class TextNotificationSystem : INotificationSystem
 {
-    private readonly Message _message;
+    private readonly string _notification;
 
-    public TextNotificationSystem(Message message)
+    public TextNotificationSystem(string notification)
     {
-        _message = message;
+       _notification = notification;
     }
 
     public void Notify()
     {
-        Console.WriteLine(_message.Body);
+        Console.WriteLine(_notification);
     }
 }

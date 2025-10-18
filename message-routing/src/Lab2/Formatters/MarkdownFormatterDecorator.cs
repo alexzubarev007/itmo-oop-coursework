@@ -1,6 +1,4 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab2.Messages;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
 
 public class MarkdownFormatterDecorator : IFormatter
 {
@@ -11,15 +9,15 @@ public class MarkdownFormatterDecorator : IFormatter
         _formatter = formatter;
     }
 
-    public void WriteHeader(Message message)
+    public void WriteHeader(string header)
     {
-        string formattedHeader = $"# {message.Header}";
-        _formatter.WriteBody(new Message(formattedHeader, message.Body, message.Importance));
+        string formattedHeader = $"# {header}";
+        _formatter.WriteBody(formattedHeader);
     }
 
-    public void WriteBody(Message message)
+    public void WriteBody(string body)
     {
-        string formattedBody = $"**{message.Body}**";
-        _formatter.WriteBody(new Message(message.Header, formattedBody, message.Importance));
+        string formattedBody = $"**{body}**";
+        _formatter.WriteBody(formattedBody);
     }
 }

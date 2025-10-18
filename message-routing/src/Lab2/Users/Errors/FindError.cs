@@ -2,8 +2,5 @@
 
 public sealed record FindError : IUserError
 {
-    public string Report()
-    {
-        return "No such message";
-    }
+    public string Report() => "No such message";
 }

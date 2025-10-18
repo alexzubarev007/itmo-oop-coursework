@@ -1,10 +1,8 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab2.Messages;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
 
 public interface IFormatter
 {
-    void WriteHeader(Message message);
+    void WriteHeader(string header);
 
-    void WriteBody(Message message);
+    void WriteBody(string body);
 }

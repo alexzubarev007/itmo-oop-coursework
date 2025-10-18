@@ -1,6 +1,4 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab2.Messages;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
 
 public class FileFormatter : IFormatter
 {
@@ -11,13 +9,13 @@ public class FileFormatter : IFormatter
         _path = path;
     }
 
-    public void WriteHeader(Message message)
+    public void WriteHeader(string header)
     {
-        File.AppendAllText(_path, message.Header + "\n");
+        File.AppendAllText(_path, header + "\n");
     }
 
-    public void WriteBody(Message message)
+    public void WriteBody(string body)
     {
-        File.AppendAllText(_path, message.Body + "\n");
+        File.AppendAllText(_path, body + "\n");
     }
 }

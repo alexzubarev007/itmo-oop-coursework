@@ -2,8 +2,5 @@
 
 public sealed record MarkReadError : IUserError
 {
-    public string Report()
-    {
-        return "Try to mark as read already read message";
-    }
+    public string Report() => "Try to mark as read already read message";
 }

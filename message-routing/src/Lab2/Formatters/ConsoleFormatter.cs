@@ -1,16 +1,14 @@
-﻿using Itmo.ObjectOrientedProgramming.Lab2.Messages;
-
-namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Formatters;
 
 public class ConsoleFormatter : IFormatter
 {
-    public void WriteHeader(Message message)
+    public void WriteHeader(string header)
     {
-        Console.WriteLine(message.Header);
+        Console.WriteLine(header);
     }
 
-    public void WriteBody(Message message)
+    public void WriteBody(string body)
     {
-        Console.WriteLine(message.Body);
+        Console.WriteLine(body);
     }
 }
