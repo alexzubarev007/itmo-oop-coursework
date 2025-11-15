@@ -19,7 +19,7 @@ public class Fight
         Table attackingTable = _firstTable;
         Table attackedTable = _secondTable;
 
-        bool isFirstAttacking = true;
+        bool isFirstPlayerAttacking = true;
         int previousStepIndex = -1;
 
         FightResult? result = null;
@@ -36,15 +36,15 @@ public class Fight
                 attackingCreature.Attack(attackedCreature);
             }
 
-            result = CheckStepResulting(attackingCreature, attackedCreature, isFirstAttacking);
+            result = CheckStepResulting(attackingCreature, attackedCreature, isFirstPlayerAttacking);
 
-            if (!isFirstAttacking)
+            if (!isFirstPlayerAttacking)
             {
                 ++previousStepIndex;
             }
 
             (attackingTable, attackedTable) = (attackedTable, attackingTable);
-            isFirstAttacking = !isFirstAttacking;
+            isFirstPlayerAttacking = !isFirstPlayerAttacking;
         }
 
         return result;

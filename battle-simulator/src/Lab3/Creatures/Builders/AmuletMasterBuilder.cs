@@ -1,22 +1,16 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ConcreteCreatures;
-using Itmo.ObjectOrientedProgramming.Lab3.Modifiers.ModifierAppliers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.Builders;
 
 public sealed class AmuletMasterBuilder : CreatureBuilderBase
 {
-    public override ICreature Build()
+    protected override ICreature Create()
     {
-        ICreature creature = new AmuletMaster();
-        creature = ApplyModifiers(creature);
-        return creature;
-    }
+        if (AttackIndicator is null || HealthIndicator is null)
+        {
+            throw new ArgumentException("Amulet master can't be built");
+        }
 
-    protected override ICreature ApplyModifiers(ICreature creature)
-    {
-        creature = new MagicShieldApplier().Apply(creature);
-        creature = new AttackingSkillApplier().Apply(creature);
-
-        return base.ApplyModifiers(creature);
+        return new AmuletMaster(AttackIndicator, HealthIndicator);
     }
 }

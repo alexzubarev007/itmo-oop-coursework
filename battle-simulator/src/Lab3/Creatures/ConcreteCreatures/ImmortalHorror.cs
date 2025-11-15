@@ -6,10 +6,19 @@ public sealed class ImmortalHorror : CreatureBase
 {
     private bool _wasKilled;
 
-    public ImmortalHorror() : base(4, 4)
+    public ImmortalHorror(AttackParameter attack, HealthParameter health) : base(attack, health)
     {
         _wasKilled = false;
     }
+
+    private ImmortalHorror(AttackParameter attack, HealthParameter health, bool wasKilled)
+        : base(attack, health)
+    {
+        _wasKilled = wasKilled;
+    }
+
+    public override ICreature Copy()
+        => new ImmortalHorror(AttackIndicator, HealthIndicator, _wasKilled);
 
     public override void ReceiveDamage(AttackParameter damaging)
     {
@@ -20,9 +29,4 @@ public sealed class ImmortalHorror : CreatureBase
             HealthIndicator = new HealthParameter(1);
         }
     }
-
-    public override ICreature Copy()
-        => new ImmortalHorror(AttackIndicator.Value, HealthIndicator.Value);
-
-    private ImmortalHorror(int attack, int health) : base(attack, health) { }
 }

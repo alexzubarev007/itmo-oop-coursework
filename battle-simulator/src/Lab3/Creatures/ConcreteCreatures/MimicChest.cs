@@ -4,7 +4,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.ConcreteCreatures;
 
 public sealed class MimicChest : CreatureBase
 {
-    public MimicChest() : base(1, 1) { }
+    public MimicChest(AttackParameter attack, HealthParameter health) : base(attack, health) { }
+
+    public override ICreature Copy()
+        => new MimicChest(AttackIndicator, HealthIndicator);
 
     public override void Attack(ICreature other)
     {
@@ -13,9 +16,4 @@ public sealed class MimicChest : CreatureBase
 
         other.ReceiveDamage(AttackIndicator);
     }
-
-    public override ICreature Copy()
-        => new MimicChest(AttackIndicator.Value, HealthIndicator.Value);
-
-    private MimicChest(int attack, int health) : base(attack, health) { }
 }

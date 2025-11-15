@@ -1,9 +1,11 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.Factories;
+using Itmo.ObjectOrientedProgramming.Lab3.Creatures.Parameters;
 using Itmo.ObjectOrientedProgramming.Lab3.Modifiers;
 using Itmo.ObjectOrientedProgramming.Lab3.Modifiers.ModifierAppliers;
 using Itmo.ObjectOrientedProgramming.Lab3.Spells;
 using Itmo.ObjectOrientedProgramming.Lab3.Tables;
+using Itmo.ObjectOrientedProgramming.Lab3.Tables.Generators;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
@@ -16,19 +18,19 @@ public class SpellTests
         // arrange
         ICreature catalogEvilFighter = new EvilFighterBuilderFactory()
             .CreateBuilder()
+            .WithAttack(new AttackParameter(7))
             .WithModifier(new MagicShieldApplier())
             .Build();
-        var table = new Table();
+        var table = new Table(new CryptoRandom());
         table.Add(catalogEvilFighter);
 
         // act
-        table.UseSpell(new StrengthSpell(), 0);
+        table.UseSpell(new StrengthSpell(), catalogEvilFighter);
         ICreature tableCreature = table.GetCreatureById(0);
-        int difference = tableCreature.AttackIndicator.Value
-                         - catalogEvilFighter.AttackIndicator.Value;
+        int secondAttackValue = tableCreature.AttackIndicator.Value;
 
         // assert
-        Assert.Equal(5, difference);
+        Assert.Equal(12, secondAttackValue);
     }
 
     [Fact]
@@ -37,19 +39,19 @@ public class SpellTests
         // arrange
         ICreature catalogCreature = new EvilFighterBuilderFactory()
             .CreateBuilder()
+            .WithHealth(new HealthParameter(7))
             .WithModifier(new MagicShieldApplier())
             .Build();
-        var table = new Table();
+        var table = new Table(new CryptoRandom());
         table.Add(catalogCreature);
 
         // act
-        table.UseSpell(new EnduranceSpell(), 0);
+        table.UseSpell(new EnduranceSpell(), catalogCreature);
         ICreature tableCreature = table.GetCreatureById(0);
-        int difference = tableCreature.HealthIndicator.Value
-                         - catalogCreature.HealthIndicator.Value;
+        int secondHealthValue = tableCreature.HealthIndicator.Value;
 
         // assert
-        Assert.Equal(5, difference);
+        Assert.Equal(12, secondHealthValue);
     }
 
     [Fact]
@@ -60,16 +62,18 @@ public class SpellTests
             .CreateBuilder()
             .WithModifier(new MagicShieldApplier())
             .Build();
-        var table = new Table();
+        int firstAttack = catalogCreature.AttackIndicator.Value;
+        int firstHealth = catalogCreature.HealthIndicator.Value;
+        var table = new Table(new CryptoRandom());
         table.Add(catalogCreature);
 
         // act
-        table.UseSpell(new MagicMirror(), 0);
+        table.UseSpell(new MagicMirror(), catalogCreature);
         ICreature tableCreature = table.GetCreatureById(0);
 
         // assert
-        Assert.True(tableCreature.HealthIndicator.Value == catalogCreature.AttackIndicator.Value);
-        Assert.True(tableCreature.AttackIndicator.Value == catalogCreature.HealthIndicator.Value);
+        Assert.True(tableCreature.HealthIndicator.Value == firstAttack);
+        Assert.True(tableCreature.AttackIndicator.Value == firstHealth);
     }
 
     [Fact]
@@ -80,11 +84,11 @@ public class SpellTests
             .CreateBuilder()
             .WithModifier(new MagicShieldApplier())
             .Build();
-        var table = new Table();
+        var table = new Table(new CryptoRandom());
         table.Add(catalogCreature);
 
         // act
-        table.UseSpell(new DefendingAmulet(), 0);
+        table.UseSpell(new DefendingAmulet(), catalogCreature);
         ICreature tableCreature = table.GetCreatureById(0);
 
         // assert

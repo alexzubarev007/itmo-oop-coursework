@@ -1,9 +1,11 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.Factories;
+using Itmo.ObjectOrientedProgramming.Lab3.Creatures.Parameters;
 using Itmo.ObjectOrientedProgramming.Lab3.Fights;
 using Itmo.ObjectOrientedProgramming.Lab3.Modifiers.ModifierAppliers;
 using Itmo.ObjectOrientedProgramming.Lab3.Spells;
 using Itmo.ObjectOrientedProgramming.Lab3.Tables;
+using Itmo.ObjectOrientedProgramming.Lab3.Tables.Generators;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
@@ -20,8 +22,8 @@ public class FightTests
         ICreature mimicChest = new MimicChestBuilderFactory()
             .CreateBuilder()
             .Build();
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable.Add(battleAnalyst);
         secondTable.Add(mimicChest);
 
@@ -43,8 +45,8 @@ public class FightTests
             .CreateBuilder()
             .WithModifier(new MagicShieldApplier())
             .Build();
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable.Add(battleAnalyst);
         secondTable.Add(mimicChest);
 
@@ -67,8 +69,8 @@ public class FightTests
             .CreateBuilder()
             .WithModifier(new MagicShieldApplier())
             .Build();
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable.Add(battleAnalyst);
         secondTable.Add(mimicChest);
 
@@ -94,11 +96,11 @@ public class FightTests
             .Build();
         ICreature amuletMaster = new AmuletMasterBuilderFactory()
             .CreateBuilder()
+            .WithHealth(new HealthParameter(5))
             .Build();
-        amuletMaster.ChangeHealth(5);
-        var firstTable1 = new Table();
-        var firstTable2 = new Table();
-        var secondTable = new Table();
+        var firstTable1 = new Table(new CryptoRandom());
+        var firstTable2 = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable1.Add(firstImmortalHorror);
         firstTable2.Add(secondImmortalHorror);
 
@@ -130,8 +132,8 @@ public class FightTests
             .CreateBuilder()
             .Build();
 
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable.Add(battleAnalyst);
         firstTable.Add(evilFighter);
         firstTable.Add(immortalHorror);
@@ -139,9 +141,9 @@ public class FightTests
         secondTable.Add(amuletMaster);
 
         // act
-        secondTable.UseSpell(new EnduranceSpell(), 0)
-            .UseSpell(new EnduranceSpell(), 0)
-            .UseSpell(new EnduranceSpell(), 0);
+        secondTable.UseSpell(new EnduranceSpell(), amuletMaster)
+            .UseSpell(new EnduranceSpell(), amuletMaster)
+            .UseSpell(new EnduranceSpell(), amuletMaster);
         FightResult result = new Fight(firstTable, secondTable).Play();
 
         // assert
@@ -152,8 +154,8 @@ public class FightTests
     public void EmptyTables_WhenTheyFight_HaveDraw()
     {
         // arrange
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
 
         // act
         FightResult result = new Fight(firstTable, secondTable).Play();
@@ -176,10 +178,10 @@ public class FightTests
             .CreateBuilder()
             .WithModifier(new AttackingSkillApplier())
             .Build();
-        var firstBattleAnalystTable = new Table();
-        var secondBattleAnalystTable = new Table();
+        var firstBattleAnalystTable = new Table(new CryptoRandom());
+        var secondBattleAnalystTable = new Table(new CryptoRandom());
 
-        var immortalHorrorTable = new Table();
+        var immortalHorrorTable = new Table(new CryptoRandom());
         firstBattleAnalystTable.Add(firstFightBattleAnalyst);
         secondBattleAnalystTable.Add(secondFightBattleAnalyst);
         immortalHorrorTable.Add(immortalHorror);
@@ -228,8 +230,8 @@ public class FightTests
             .CreateBuilder()
             .Build();
 
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable.Add(mimicChest11);
         firstTable.Add(mimicChest12);
         firstTable.Add(mimicChest13);
@@ -261,8 +263,8 @@ public class FightTests
             .CreateBuilder()
             .Build();
 
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable.Add(catalogAmuletMaster);
         secondTable.Add(catalogEvilFighter);
 
@@ -286,8 +288,8 @@ public class FightTests
             .CreateBuilder()
             .Build();
 
-        var firstTable = new Table();
-        var secondTable = new Table();
+        var firstTable = new Table(new CryptoRandom());
+        var secondTable = new Table(new CryptoRandom());
         firstTable.Add(catalogAmuletMaster);
         secondTable.Add(catalogEvilFighter);
 

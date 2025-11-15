@@ -2,11 +2,19 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.Parameters;
 
 public record HealthParameter
 {
-    public int Value { get; }
-
     public HealthParameter(int value)
     {
         Value = value;
+    }
+
+    public int Value { get; }
+
+    public void EnsurePositive()
+    {
+        if (Value < 0)
+        {
+            throw new ArgumentException("Health shouldn't be negative", nameof(Value));
+        }
     }
 
     public HealthParameter Subtract(int subtrahend)

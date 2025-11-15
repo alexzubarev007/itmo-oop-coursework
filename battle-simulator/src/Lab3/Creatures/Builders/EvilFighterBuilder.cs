@@ -4,10 +4,13 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.Builders;
 
 public sealed class EvilFighterBuilder : CreatureBuilderBase
 {
-    public override ICreature Build()
+    protected override ICreature Create()
     {
-        ICreature creature = new EvilFighter();
-        creature = ApplyModifiers(creature);
-        return creature;
+        if (AttackIndicator is null || HealthIndicator is null)
+        {
+            throw new ArgumentException("Evil Fighter can't be built");
+        }
+
+        return new EvilFighter(AttackIndicator, HealthIndicator);
     }
 }

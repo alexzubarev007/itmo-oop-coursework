@@ -7,14 +7,14 @@ public sealed class AttackingSkill : ICreature
 {
     private readonly ICreature _creature;
 
-    public AttackParameter AttackIndicator => _creature.AttackIndicator;
-
-    public HealthParameter HealthIndicator => _creature.HealthIndicator;
-
     public AttackingSkill(ICreature creature)
     {
         _creature = creature;
     }
+
+    public AttackParameter AttackIndicator => _creature.AttackIndicator;
+
+    public HealthParameter HealthIndicator => _creature.HealthIndicator;
 
     public void Attack(ICreature other)
     {

@@ -1,11 +1,11 @@
+using Itmo.ObjectOrientedProgramming.Lab3.Creatures.Parameters;
+
 namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.ConcreteCreatures;
 
 public sealed class AmuletMaster : CreatureBase
 {
-    public AmuletMaster() : base(5, 2) { }
+    public AmuletMaster(AttackParameter attack, HealthParameter health) : base(attack, health) { }
 
     public override ICreature Copy()
-        => new AmuletMaster(AttackIndicator.Value, HealthIndicator.Value);
-
-    private AmuletMaster(int attack, int health) : base(attack, health) { }
+        => new AmuletMaster(AttackIndicator, HealthIndicator);
 }

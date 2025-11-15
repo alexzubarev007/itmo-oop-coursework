@@ -1,9 +1,8 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.Factories;
 using Itmo.ObjectOrientedProgramming.Lab3.Modifiers.ModifierAppliers;
-using Itmo.ObjectOrientedProgramming.Lab3.Spells;
 using Itmo.ObjectOrientedProgramming.Lab3.Tables;
-using Itmo.ObjectOrientedProgramming.Lab3.Tables.Results;
+using Itmo.ObjectOrientedProgramming.Lab3.Tables.Generators;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
@@ -46,46 +45,26 @@ public class TableTests
             .CreateBuilder()
             .WithModifier(new AttackingSkillApplier())
             .Build();
-        var table = new Table();
+        var table = new Table(new CryptoRandom());
 
         // act
-        TableResult firstResult = table.Add(battleAnalyst1);
-        TableResult secondResult = table.Add(battleAnalyst2);
-        TableResult thirdResult = table.Add(immortalHorror1);
-        TableResult fourthResult = table.Add(immortalHorror2);
-        TableResult fifthResult = table.Add(mimicChest1);
-        TableResult sixthResult = table.Add(mimicChest2);
-        TableResult seventhResult = table.Add(evilFighter1);
-        TableResult eightResult = table.Add(evilFighter2);
+        AddCreatureResult firstResult = table.Add(battleAnalyst1);
+        AddCreatureResult secondResult = table.Add(battleAnalyst2);
+        AddCreatureResult thirdResult = table.Add(immortalHorror1);
+        AddCreatureResult fourthResult = table.Add(immortalHorror2);
+        AddCreatureResult fifthResult = table.Add(mimicChest1);
+        AddCreatureResult sixthResult = table.Add(mimicChest2);
+        AddCreatureResult seventhResult = table.Add(evilFighter1);
+        AddCreatureResult eightResult = table.Add(evilFighter2);
 
         // assert
-        Assert.IsType<TableResult.Success>(firstResult);
-        Assert.IsType<TableResult.Success>(secondResult);
-        Assert.IsType<TableResult.Success>(thirdResult);
-        Assert.IsType<TableResult.Success>(fourthResult);
-        Assert.IsType<TableResult.Success>(fifthResult);
-        Assert.IsType<TableResult.Success>(sixthResult);
-        Assert.IsType<TableResult.Success>(seventhResult);
-        Assert.IsType<TableResult.Failure>(eightResult);
-    }
-
-    [Fact]
-    public void CreatureOnTheTable_WhenSomehowChanges_DoNotInfluenceOnCatalogCreature()
-    {
-        // arrange
-        ICreature catalogBattleAnalyst = new BattleAnalystBuilderFactory()
-            .CreateBuilder()
-            .WithModifier(new MagicShieldApplier())
-            .Build();
-        var table = new Table();
-
-        // act
-        table.Add(catalogBattleAnalyst);
-        table.UseSpell(new StrengthSpell(), 0);
-        ICreature tableCreature = table.GetCreatureById(0);
-
-        // assert
-        Assert.Equal(7, tableCreature.AttackIndicator.Value);
-        Assert.Equal(2, catalogBattleAnalyst.AttackIndicator.Value);
+        Assert.IsType<AddCreatureResult.Success>(firstResult);
+        Assert.IsType<AddCreatureResult.Success>(secondResult);
+        Assert.IsType<AddCreatureResult.Success>(thirdResult);
+        Assert.IsType<AddCreatureResult.Success>(fourthResult);
+        Assert.IsType<AddCreatureResult.Success>(fifthResult);
+        Assert.IsType<AddCreatureResult.Success>(sixthResult);
+        Assert.IsType<AddCreatureResult.Success>(seventhResult);
+        Assert.IsType<AddCreatureResult.Failure>(eightResult);
     }
 }

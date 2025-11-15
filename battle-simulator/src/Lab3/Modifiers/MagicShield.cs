@@ -7,10 +7,6 @@ public sealed class MagicShield : ICreature
 {
     private readonly ICreature _creature;
 
-    public AttackParameter AttackIndicator => _creature.AttackIndicator;
-
-    public HealthParameter HealthIndicator => _creature.HealthIndicator;
-
     private bool _isDamaged;
 
     public MagicShield(ICreature creature)
@@ -18,6 +14,16 @@ public sealed class MagicShield : ICreature
         _creature = creature;
         _isDamaged = false;
     }
+
+    private MagicShield(ICreature creature, bool isDamaged)
+    {
+        _creature = creature;
+        _isDamaged = isDamaged;
+    }
+
+    public AttackParameter AttackIndicator => _creature.AttackIndicator;
+
+    public HealthParameter HealthIndicator => _creature.HealthIndicator;
 
     public void Attack(ICreature other)
     {
@@ -47,6 +53,6 @@ public sealed class MagicShield : ICreature
 
     public ICreature Copy()
     {
-        return new MagicShield(_creature.Copy());
+        return new MagicShield(_creature.Copy(), _isDamaged);
     }
 }
