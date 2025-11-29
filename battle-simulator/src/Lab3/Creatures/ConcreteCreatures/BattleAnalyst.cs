@@ -8,7 +8,7 @@ public sealed class BattleAnalyst : CreatureBase
 
     public override void Attack(ICreature other)
     {
-        AttackIndicator = AttackIndicator.Add(2);
+        AttackIndicator = AttackIndicator.IncreaseBy(2);
         other.ReceiveDamage(AttackIndicator);
     }
 

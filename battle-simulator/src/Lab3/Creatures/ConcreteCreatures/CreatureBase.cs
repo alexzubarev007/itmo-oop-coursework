@@ -27,7 +27,7 @@ public abstract class CreatureBase : ICreature
     {
         HealthIndicator.EnsurePositive();
 
-        HealthIndicator = HealthIndicator.Subtract(damaging.Value);
+        HealthIndicator = HealthIndicator.DecreaseBy(damaging.Value);
     }
 
     public void ChangeAttack(int value)

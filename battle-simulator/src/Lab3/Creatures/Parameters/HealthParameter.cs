@@ -17,11 +17,11 @@ public record HealthParameter
         }
     }
 
-    public HealthParameter Subtract(int subtrahend)
-        => new HealthParameter(Value - subtrahend);
+    public HealthParameter DecreaseBy(int value)
+        => new HealthParameter(Value - value);
 
-    public HealthParameter Add(int addend)
-        => new HealthParameter(Value + addend);
+    public HealthParameter IncreaseBy(int value)
+        => new HealthParameter(Value + value);
 
     public bool IsPositive() => Value > 0;
 

@@ -14,14 +14,14 @@ public record AttackParameter
 
     public int Value { get; }
 
-    public AttackParameter Subtract(int subtrahend)
-        => new AttackParameter(Value - subtrahend);
+    public AttackParameter DecreaseBy(int value)
+        => new AttackParameter(Value - value);
 
-    public AttackParameter Add(int addend)
-        => new AttackParameter(Value + addend);
+    public AttackParameter IncreaseBy(int value)
+        => new AttackParameter(Value + value);
 
-    public AttackParameter Multiply(int multiplier)
-        => new AttackParameter(Value * multiplier);
+    public AttackParameter Multiply(int value)
+        => new AttackParameter(Value * value);
 
     public bool IsPositive()
     {

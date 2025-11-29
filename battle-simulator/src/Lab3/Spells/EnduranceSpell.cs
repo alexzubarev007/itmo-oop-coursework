@@ -6,7 +6,7 @@ public class EnduranceSpell : ISpell
 {
     public ICreature Use(ICreature creature)
     {
-        creature.ChangeHealth(creature.HealthIndicator.Add(5).Value);
+        creature.ChangeHealth(creature.HealthIndicator.IncreaseBy(5).Value);
         return creature;
     }
 }
