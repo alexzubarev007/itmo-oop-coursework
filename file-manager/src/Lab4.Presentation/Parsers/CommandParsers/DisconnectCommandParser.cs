@@ -50,7 +50,10 @@ public sealed class DisconnectCommandParser : ICommandParser
         return new ParsingResult.Success(command);
     }
 
-    private IParsingError? ParsePositional(DisconnectCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParsePositional(
+        DisconnectCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         foreach (IPositionalApplier<DisconnectCommandBuilder> positionalArgument
                  in _positionalAppliers)

@@ -50,7 +50,10 @@ public sealed class TreeListCommandParser : ICommandParser
         return new ParsingResult.Success(command);
     }
 
-    private IParsingError? ParsePositional(TreeListCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParsePositional(
+        TreeListCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         foreach (IPositionalApplier<TreeListCommandBuilder> positionalArgument
                  in _positionalAppliers)

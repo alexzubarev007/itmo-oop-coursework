@@ -74,7 +74,10 @@ public sealed class DeleteFileCommandParser : ICommandParser
         return null;
     }
 
-    private IParsingError? ParseFlag(DeleteFileCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParseFlag(
+        DeleteFileCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         if (_flagApplierChain is not null)
         {

@@ -50,7 +50,10 @@ public sealed class GoToCommandParser : ICommandParser
         return new ParsingResult.Success(command);
     }
 
-    private IParsingError? ParsePositional(GoToCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParsePositional(
+        GoToCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         foreach (IPositionalApplier<GoToCommandBuilder> positionalArgument
                  in _positionalAppliers)
@@ -74,7 +77,10 @@ public sealed class GoToCommandParser : ICommandParser
         return null;
     }
 
-    private IParsingError? ParseFlag(GoToCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParseFlag(
+        GoToCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         if (_flagApplierChain is not null)
         {

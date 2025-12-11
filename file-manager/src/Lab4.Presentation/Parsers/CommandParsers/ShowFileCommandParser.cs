@@ -50,7 +50,10 @@ public sealed class ShowFileCommandParser : ICommandParser
         return new ParsingResult.Success(command);
     }
 
-    private IParsingError? ParsePositional(ShowFileCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParsePositional(
+        ShowFileCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         foreach (IPositionalApplier<ShowFileCommandBuilder> positionalArgument
                  in _positionalAppliers)
@@ -74,7 +77,10 @@ public sealed class ShowFileCommandParser : ICommandParser
         return null;
     }
 
-    private IParsingError? ParseFlag(ShowFileCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParseFlag(
+        ShowFileCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         if (_flagApplierChain is not null)
         {

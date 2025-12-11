@@ -74,7 +74,10 @@ public sealed class MoveFileCommandParser : ICommandParser
         return null;
     }
 
-    private IParsingError? ParseFlag(MoveFileCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParseFlag(
+        MoveFileCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         if (_flagApplierChain is not null)
         {

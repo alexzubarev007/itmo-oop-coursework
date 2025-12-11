@@ -50,7 +50,10 @@ public sealed class ConnectCommandParser : ICommandParser
         return new ParsingResult.Success(command);
     }
 
-    private IParsingError? ParsePositional(ConnectCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParsePositional(
+        ConnectCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         foreach (IPositionalApplier<ConnectCommandBuilder> positionalArgument
                  in _positionalAppliers)
@@ -74,7 +77,10 @@ public sealed class ConnectCommandParser : ICommandParser
         return null;
     }
 
-    private IParsingError? ParseFlag(ConnectCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParseFlag(
+        ConnectCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         if (_flagApplierChain is not null)
         {
@@ -86,7 +92,7 @@ public sealed class ConnectCommandParser : ICommandParser
                 }
 
                 bool isFlagParsed = _flagApplierChain
-                                    .TryApply(builder, tokens[currentIndex], tokens[currentIndex + 1]);
+                    .TryApply(builder, tokens[currentIndex], tokens[currentIndex + 1]);
 
                 if (!isFlagParsed)
                 {

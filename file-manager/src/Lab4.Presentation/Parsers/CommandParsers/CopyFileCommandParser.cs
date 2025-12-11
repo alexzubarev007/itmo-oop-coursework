@@ -50,7 +50,10 @@ public sealed class CopyFileCommandParser : ICommandParser
         return new ParsingResult.Success(command);
     }
 
-    private IParsingError? ParsePositional(CopyFileCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParsePositional(
+        CopyFileCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         foreach (IPositionalApplier<CopyFileCommandBuilder> positionalArgument
                  in _positionalAppliers)
@@ -74,7 +77,10 @@ public sealed class CopyFileCommandParser : ICommandParser
         return null;
     }
 
-    private IParsingError? ParseFlag(CopyFileCommandBuilder builder, string[] tokens, ref int currentIndex)
+    private IParsingError? ParseFlag(
+        CopyFileCommandBuilder builder,
+        string[] tokens,
+        ref int currentIndex)
     {
         if (_flagApplierChain is not null)
         {
