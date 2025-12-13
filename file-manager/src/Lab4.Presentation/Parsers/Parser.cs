@@ -5,9 +5,9 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers;
 
 public class Parser
 {
-    private readonly ICommandParserFactoryLink _commandsChain;
+    private readonly ICommandParserLink _commandsChain;
 
-    public Parser(ICommandParserFactoryLink commandsChain)
+    public Parser(ICommandParserLink commandsChain)
     {
         _commandsChain = commandsChain;
     }
@@ -16,15 +16,17 @@ public class Parser
     {
         string[] tokens = commandLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        ICommandParserFactory? commandParserFactory = _commandsChain.ParseCommandName(tokens);
+        IEnumerator<string> current = tokens.AsEnumerable().GetEnumerator();
 
-        if (commandParserFactory is null)
+        current.MoveNext();
+
+        ICommandParser? commandParser = _commandsChain.ParseCommandName(current);
+
+        if (commandParser is null)
         {
             return new ParsingResult.Failure(new UnknownCommandError());
         }
 
-        ICommandParser commandParser = commandParserFactory.Create();
-
-        return commandParser.Parse(tokens);
+        return commandParser.Parse(current);
     }
 }

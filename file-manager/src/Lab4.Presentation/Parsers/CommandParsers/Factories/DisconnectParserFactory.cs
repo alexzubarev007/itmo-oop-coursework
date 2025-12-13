@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParsers.Factories;
 
@@ -6,11 +6,10 @@ public sealed class DisconnectParserFactory : ICommandParserFactory
 {
     public ICommandParser Create()
     {
-        IReadOnlyList<IPositionalApplier<DisconnectCommandBuilder>> positional =
-            new List<IPositionalApplier<DisconnectCommandBuilder>>();
+        IPositionalApplierLink<DisconnectCommandBuilder>? positionalChain = null;
 
         IFlagApplierLink<DisconnectCommandBuilder>? flagChain = null;
 
-        return new DisconnectCommandParser(positional, flagChain);
+        return new CommandParser<DisconnectCommandBuilder>(positionalChain, flagChain);
     }
 }

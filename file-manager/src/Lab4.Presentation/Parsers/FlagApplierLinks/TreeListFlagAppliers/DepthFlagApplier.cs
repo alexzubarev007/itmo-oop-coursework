@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.FlagApplierLinks.TreeListFlagAppliers;
 
@@ -6,19 +6,27 @@ public sealed class DepthFlagApplier : FlagApplierLinkBase<TreeListCommandBuilde
 {
     public override bool TryApply(
         TreeListCommandBuilder builder,
-        string name,
-        string value)
+        IEnumerator<string> current)
     {
-        if (name != "-d")
+        if (current.Current != "-d")
         {
-            return CallNext(builder, name, value);
+            return CallNext(builder, current);
         }
+
+        if (!current.MoveNext())
+        {
+            return false;
+        }
+
+        string value = current.Current;
 
         if (!int.TryParse(value, out int depth) ||
             depth < 0)
         {
             return false;
         }
+
+        Console.WriteLine("Big success");
 
         builder.WithDepth(depth);
         return true;

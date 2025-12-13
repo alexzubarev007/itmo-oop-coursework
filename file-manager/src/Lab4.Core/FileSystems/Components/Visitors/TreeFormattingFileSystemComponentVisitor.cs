@@ -58,7 +58,7 @@ public sealed class TreeFormattingFileSystemComponentVisitor
 
         ++_currentDepth;
 
-        foreach (IFileSystemComponent component in directory.Components)
+        foreach (IFileSystemComponent component in directory.GetSubComponents())
         {
             component.Accept(this);
         }

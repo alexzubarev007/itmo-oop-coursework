@@ -1,5 +1,5 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.Builders;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalAppliers.MoveFileArgumentAppliers;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalApplierLinks.MoveFileArgumentApplierLinks;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParsers.Factories;
 
@@ -7,14 +7,11 @@ public sealed class MoveFileParserFactory : ICommandParserFactory
 {
     public ICommandParser Create()
     {
-        var positional = new List<IPositionalApplier<MoveFileCommandBuilder>>
-        {
-            new MoveFileSourcePathApplier(),
-            new MoveFileDestinationPathApplier(),
-        };
+        IPositionalApplierLink<MoveFileCommandBuilder> positionalChain = new MoveFileSourcePathApplier()
+            .AddNext(new MoveFileDestinationPathApplier());
 
         IFlagApplierLink<MoveFileCommandBuilder>? flagChain = null;
 
-        return new MoveFileCommandParser(positional, flagChain);
+        return new CommandParser<MoveFileCommandBuilder>(positionalChain, flagChain);
     }
 }

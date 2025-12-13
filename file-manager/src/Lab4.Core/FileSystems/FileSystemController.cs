@@ -1,25 +1,24 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.OperationResults;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.OperationResults.OperationErrors;
-
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 
 public class FileSystemController
 {
-    public IFileSystem FileSystem { get; private set; } = new NullFileSystem();
+    public IFileSystem? FileSystem { get; private set; }
 
-    public void Connect(IFileSystem fileSystem)
+    public string ConnectionPath { get; private set; } = string.Empty;
+
+    public string LocalPath { get; set; } = string.Empty;
+
+    public void Connect(IFileSystem fileSystem, string connectionPath)
     {
         FileSystem = fileSystem;
+        ConnectionPath = connectionPath;
+        LocalPath = string.Empty;
     }
 
-    public OperationResult Disconnect()
+    public void Disconnect()
     {
-        if (FileSystem is NullFileSystem)
-        {
-            return new OperationResult.Failure(new DisconnectingError());
-        }
-
-        FileSystem = new NullFileSystem();
-        return new OperationResult.Success();
+        FileSystem = null;
+        ConnectionPath = string.Empty;
+        LocalPath = string.Empty;
     }
 }

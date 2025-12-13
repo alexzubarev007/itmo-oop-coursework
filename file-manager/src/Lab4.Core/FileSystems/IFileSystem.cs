@@ -1,30 +1,30 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.Components;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.OperationResults;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
-
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 
 public interface IFileSystem
 {
-    string ConnectionPath { get; }
+    bool DirectoryExists(string path);
 
-    string LocalPath { get; }
+    bool FileExists(string path);
 
-    OperationResult GoToPath(string path);
+    string GetFullPath(string connectionPath, string localPath, string currentPath);
 
-    OperationResult GetFileContent(string path, IWriter writer);
+    string GoToPath(string connectionPath, string path);
 
-    OperationResult MoveFile(string sourcePath, string destinationPath);
+    string GetFileContent(string path);
 
-    OperationResult CopyFile(string sourcePath, string destinationPath);
+    void MoveFile(string sourcePath, string destinationPath);
 
-    OperationResult DeleteFile(string path);
+    void CopyFile(string sourcePath, string destinationPath);
 
-    OperationResult RenameFile(string path, string newName);
+    void DeleteFile(string path);
 
-    IFileSystemComponent? GetComponent();
+    void RenameFile(string path, string newNamePath);
 
-    IReadOnlyCollection<IFileSystemComponent> GetOneLevelSubComponents(string fullPath);
+    string Combine(string path1, string path2);
+
+    string? GetDirectoryName(string path);
+
+    IReadOnlyCollection<string> GetSubComponents(string path);
 
     string GetName(string fullPath);
 }

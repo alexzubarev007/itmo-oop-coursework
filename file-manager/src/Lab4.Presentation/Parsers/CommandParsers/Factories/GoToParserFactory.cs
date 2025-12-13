@@ -1,5 +1,5 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.Builders;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalAppliers.GoToArgumentAppliers;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalApplierLinks.GoToArgumentApplierLinks;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParsers.Factories;
 
@@ -7,13 +7,10 @@ public sealed class GoToParserFactory : ICommandParserFactory
 {
     public ICommandParser Create()
     {
-        var positional = new List<IPositionalApplier<GoToCommandBuilder>>()
-        {
-            new GoToPathApplier(),
-        };
+        var positional = new GoToPathApplier();
 
         IFlagApplierLink<GoToCommandBuilder>? flagChain = null;
 
-        return new GoToCommandParser(positional, flagChain);
+        return new CommandParser<GoToCommandBuilder>(positional, flagChain);
     }
 }

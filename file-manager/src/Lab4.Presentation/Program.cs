@@ -1,10 +1,10 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandResults;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ConcreteCommands;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.Components.Visitors;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.OperationResults;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers.WriterLinks;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.ConcreteCommands;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParserFactoryLinks;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.Results;
@@ -17,7 +17,7 @@ public class Program
     {
         FileSystemController controller = new();
         var parser = new Parser(new DefaultCommandChainFactory()
-                                .Create());
+            .Create());
         IWriterLink writerRegimeChain = new ConsoleWriterLink();
         IWriter writer = new ConsoleWriter();
         string? commandLine;
@@ -38,18 +38,13 @@ public class Program
                         treeListCommand.Writer = writer;
                     }
 
-                    if (command is ShowFileCommand showFileCommand)
-                    {
-                        showFileCommand.WritingRegimeChain = writerRegimeChain;
-                    }
+                    CommandResult commandResult = success.Command.Execute(controller);
 
-                    OperationResult commandResult = success.Command.Execute(controller);
-
-                    if (commandResult is OperationResult.Success commandSuccess)
+                    if (commandResult is CommandResult.Success commandSuccess)
                     {
                         Console.WriteLine("Command successfully executed");
                     }
-                    else if (commandResult is OperationResult.Failure commandFailure)
+                    else if (commandResult is CommandResult.Failure commandFailure)
                     {
                         Console.WriteLine(commandFailure.Error.Message());
                     }

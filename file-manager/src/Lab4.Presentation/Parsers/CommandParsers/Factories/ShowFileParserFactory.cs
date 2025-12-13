@@ -1,6 +1,7 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers.WriterLinks;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.FlagApplierLinks.ShowFileFlagAppliers;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalAppliers.ShowFileArgumentAppliers;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalApplierLinks.ShowFileArgumentApplierLinks;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParsers.Factories;
 
@@ -8,13 +9,10 @@ public sealed class ShowFileParserFactory : ICommandParserFactory
 {
     public ICommandParser Create()
     {
-        var positional = new List<IPositionalApplier<ShowFileCommandBuilder>>
-        {
-            new ShowFilePathApplier(),
-        };
+        var positionalChain = new ShowFilePathApplier();
 
-        var flagChain = new WritingModeFlagApplier();
+        var flagChain = new WritingModeFlagApplier(new ConsoleWriterLink());
 
-        return new ShowFileCommandParser(positional, flagChain);
+        return new CommandParser<ShowFileCommandBuilder>(positionalChain, flagChain);
     }
 }

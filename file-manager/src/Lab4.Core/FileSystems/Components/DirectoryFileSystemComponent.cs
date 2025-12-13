@@ -16,8 +16,25 @@ public sealed class DirectoryFileSystemComponent : IFileSystemComponent
 
     public string FullPath { get; }
 
-    public IReadOnlyCollection<IFileSystemComponent> Components
-        => FileSystem.GetOneLevelSubComponents(FullPath);
+    public IReadOnlyCollection<IFileSystemComponent> GetSubComponents()
+    {
+        var components = new List<IFileSystemComponent>();
+
+        foreach (string path in FileSystem.GetSubComponents(FullPath))
+        {
+            if (FileSystem.DirectoryExists(path))
+            {
+                components.Add(new DirectoryFileSystemComponent(FileSystem, path));
+            }
+
+            if (FileSystem.FileExists(path))
+            {
+                components.Add(new FileFileSystemComponent(FileSystem, path));
+            }
+        }
+
+        return components.AsReadOnly();
+    }
 
     public void Accept(IFileSystemComponentVisitor visitor)
     {

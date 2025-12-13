@@ -1,4 +1,6 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.ConcreteCommands;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ConcreteCommands;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.Factories;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParserFactoryLinks;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.Results;
@@ -12,7 +14,7 @@ public class ParserTests
     public void Parser_WhenCorrectConnectCommandWithNonDefaultFlag_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "connect /SimpleDirectory/ConnectionPath -m local";
 
@@ -23,14 +25,14 @@ public class ParserTests
         ParsingResult.Success result = Assert.IsType<ParsingResult.Success>(parsed);
         ConnectCommand command = Assert.IsType<ConnectCommand>(result.Command);
         Assert.Equal("/SimpleDirectory/ConnectionPath", command.ConnectionPath);
-        Assert.Equal("local", command.Mode);
+        Assert.IsType<LocalFileSystemFactory>(command.FileSystemFactory);
     }
 
     [Fact]
     public void Parser_WhenCorrectConnectCommandWithDefaultFlag_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "connect /SimpleDirectory/ConnectionPath";
 
@@ -41,14 +43,14 @@ public class ParserTests
         ParsingResult.Success result = Assert.IsType<ParsingResult.Success>(parsed);
         ConnectCommand command = Assert.IsType<ConnectCommand>(result.Command);
         Assert.Equal("/SimpleDirectory/ConnectionPath", command.ConnectionPath);
-        Assert.Equal("local", command.Mode);
+        Assert.IsType<LocalFileSystemFactory>(command.FileSystemFactory);
     }
 
     [Fact]
     public void Parser_WhenCorrectDisconnectCommand_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "disconnect";
 
@@ -64,7 +66,7 @@ public class ParserTests
     public void Parser_WhenCorrectGoToCommand_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "tree goto /NewPath";
 
@@ -81,7 +83,7 @@ public class ParserTests
     public void Parser_WhenCorrectTreeListCommand_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "tree list -d 5";
 
@@ -98,7 +100,7 @@ public class ParserTests
     public void Parser_WhenTreeListCommandWithoutCorrectFlag_FailsParsing()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "tree list -d -2";
 
@@ -113,7 +115,7 @@ public class ParserTests
     public void Parser_WhenTreeListCommandWithoutFlag_FailsParsing()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "tree list ";
 
@@ -128,7 +130,7 @@ public class ParserTests
     public void Parser_WhenCorrectFileShowCommand_FailsParsing()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "file show ../filepath -m console";
 
@@ -139,14 +141,14 @@ public class ParserTests
         ParsingResult.Success result = Assert.IsType<ParsingResult.Success>(parsed);
         ShowFileCommand command = Assert.IsType<ShowFileCommand>(result.Command);
         Assert.Equal("../filepath", command.FilePath);
-        Assert.Equal("console", command.WritingMode);
+        Assert.IsType<ConsoleWriter>(command.Writer);
     }
 
     [Fact]
     public void Parser_WhenCorrectFileShowCommandWithIncorrectFlag_FailsParsing()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "file show ../filepath -k console";
 
@@ -161,7 +163,7 @@ public class ParserTests
     public void Parser_WhenCorrectFileMoveCommand_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "file move sourcePath destinationPath";
 
@@ -179,7 +181,7 @@ public class ParserTests
     public void Parser_WhenCorrectFileCopyCommand_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "file copy sourcePath destinationPath";
 
@@ -197,7 +199,7 @@ public class ParserTests
     public void Parser_WhenCorrectRenameFileCommand_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "file rename sourcePath file.jpeg";
 
@@ -215,7 +217,7 @@ public class ParserTests
     public void Parser_WhenRenameFileCommandWithNotEnoughPositionalArguments_FailsParsing()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "file rename sourcePath";
 
@@ -230,7 +232,7 @@ public class ParserTests
     public void Parser_WhenCorrectDeleteFileCommand_ParsesSuccessfully()
     {
         // arrange
-        ICommandParserFactoryLink commandsChain = new DefaultCommandChainFactory().Create();
+        ICommandParserLink commandsChain = new DefaultCommandChainFactory().Create();
         var parser = new Parser(commandsChain);
         string commandLine = "file delete sourcePath";
 

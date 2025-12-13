@@ -1,6 +1,7 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemFactoryLinks;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.FlagApplierLinks.ConnectFlagAppliers;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalAppliers.ConnectArgumentAppliers;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalApplierLinks.ConnectArgumentApplierLinks;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParsers.Factories;
 
@@ -8,13 +9,9 @@ public sealed class ConnectParserFactory : ICommandParserFactory
 {
     public ICommandParser Create()
     {
-        var positional = new List<IPositionalApplier<ConnectCommandBuilder>>()
-        {
-            new ConnectConnectionPathApplier(),
-        };
+        var positionalChain = new ConnectConnectionPathApplier();
+        var flagChain = new FileSystemModeFlagApplier(new LocalFileSystemFactoryLink());
 
-        var flagChain = new FileSystemModeFlagApplier();
-
-        return new ConnectCommandParser(positional, flagChain);
+        return new CommandParser<ConnectCommandBuilder>(positionalChain, flagChain);
     }
 }

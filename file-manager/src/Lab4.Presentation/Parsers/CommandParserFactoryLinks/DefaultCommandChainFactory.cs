@@ -3,16 +3,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParser
 public sealed class DefaultCommandChainFactory
     : ICommandChainFactory
 {
-    public ICommandParserFactoryLink Create()
+    public ICommandParserLink Create()
     {
-        return new ConnectCommandParserFactoryLink()
-            .AddNext(new DisconnectCommandParserFactoryLink())
-            .AddNext(new GoToCommandParserFactoryLink())
-            .AddNext(new ShowFileCommandParserFactoryLink())
-            .AddNext(new DeleteFileCommandParserFactoryLink())
-            .AddNext(new MoveFileCommandParserFactoryLink())
-            .AddNext(new TreeListCommandParserFactoryLink())
-            .AddNext(new RenameFileCommandParserFactoryLink())
-            .AddNext(new CopyFileCommandParserFactoryLink());
+        return new ConnectCommandParserLink()
+            .AddNext(new DisconnectCommandParserLink())
+            .AddNext(new TreeCommandParserLink())
+            .AddNext(new FileCommandParserLink());
     }
 }

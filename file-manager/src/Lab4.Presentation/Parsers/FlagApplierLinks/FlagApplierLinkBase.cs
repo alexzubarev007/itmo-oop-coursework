@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.FlagApplierLinks;
 
@@ -8,7 +8,7 @@ public abstract class FlagApplierLinkBase<TCommandBuilder>
 {
     private IFlagApplierLink<TCommandBuilder>? _next;
 
-    public abstract bool TryApply(TCommandBuilder builder, string name, string value);
+    public abstract bool TryApply(TCommandBuilder builder, IEnumerator<string> current);
 
     public IFlagApplierLink<TCommandBuilder> AddNext(IFlagApplierLink<TCommandBuilder> link)
     {
@@ -26,10 +26,9 @@ public abstract class FlagApplierLinkBase<TCommandBuilder>
 
     protected bool CallNext(
         TCommandBuilder builder,
-        string name,
-        string value)
+        IEnumerator<string> current)
     {
-        return _next?.TryApply(builder, name, value)
+        return _next?.TryApply(builder, current)
                ?? false;
     }
 }

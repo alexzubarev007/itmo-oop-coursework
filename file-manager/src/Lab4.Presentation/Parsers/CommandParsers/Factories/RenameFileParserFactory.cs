@@ -1,5 +1,5 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Commands.Builders;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalAppliers.RenameFileArgumentAppliers;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalApplierLinks.RenameFileArgumentApplierLinks;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParsers.Factories;
 
@@ -7,14 +7,11 @@ public sealed class RenameFileParserFactory : ICommandParserFactory
 {
     public ICommandParser Create()
     {
-        var positional = new List<IPositionalApplier<RenameFileCommandBuilder>>
-        {
-            new RenameFilePathApplier(),
-            new RenameFileNewNameApplier(),
-        };
+        IPositionalApplierLink<RenameFileCommandBuilder> positionalChain = new RenameFilePathApplier()
+            .AddNext(new RenameFileNewNameApplier());
 
         IFlagApplierLink<RenameFileCommandBuilder>? flagChain = null;
 
-        return new RenameFileCommandParser(positional, flagChain);
+        return new CommandParser<RenameFileCommandBuilder>(positionalChain, flagChain);
     }
 }
