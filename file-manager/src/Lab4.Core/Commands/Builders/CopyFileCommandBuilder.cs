@@ -25,7 +25,6 @@ public sealed class CopyFileCommandBuilder : ICommandBuilder
         if ((_sourcePath == null) ||
             (_destinationPath == null))
         {
-            Console.WriteLine("NULLLLLL");
             return new CommandBuilderResult.Failure();
         }
 
