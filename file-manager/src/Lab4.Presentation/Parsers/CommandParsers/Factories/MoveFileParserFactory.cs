@@ -12,6 +12,8 @@ public sealed class MoveFileParserFactory : ICommandParserFactory
 
         IFlagApplierLink<MoveFileCommandBuilder>? flagChain = null;
 
-        return new CommandParser<MoveFileCommandBuilder>(positionalChain, flagChain);
+        var builder = new MoveFileCommandBuilder();
+
+        return new CommandParser<MoveFileCommandBuilder>(builder, positionalChain, flagChain);
     }
 }

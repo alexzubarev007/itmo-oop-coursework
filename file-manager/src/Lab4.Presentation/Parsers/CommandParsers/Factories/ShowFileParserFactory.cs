@@ -13,6 +13,8 @@ public sealed class ShowFileParserFactory : ICommandParserFactory
 
         var flagChain = new WritingModeFlagApplier(new ConsoleWriterLink());
 
-        return new CommandParser<ShowFileCommandBuilder>(positionalChain, flagChain);
+        var builder = new ShowFileCommandBuilder();
+
+        return new CommandParser<ShowFileCommandBuilder>(builder, positionalChain, flagChain);
     }
 }

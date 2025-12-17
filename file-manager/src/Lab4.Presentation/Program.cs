@@ -1,13 +1,8 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandResults;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ConcreteCommands;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.Components.Visitors;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers.WriterLinks;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParserFactoryLinks;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.Results;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.CommandParserFactoryLinks.Defaults;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation;
 
@@ -15,52 +10,22 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        FileSystemController controller = new();
-        var parser = new Parser(new DefaultCommandChainFactory()
-            .Create());
-        IWriterLink writerRegimeChain = new ConsoleWriterLink();
-        IWriter writer = new ConsoleWriter();
-        string? commandLine;
+        var parameters = new FormattingTreeParameters("*", "$", "---");
+        var treeWriter = new ConsoleWriter();
 
-        while ((commandLine = Console.ReadLine()) != null)
-        {
-            ParsingResult result = parser.Parse(commandLine);
+        ICommandParserLink fileSubChain = new DefaultFileSubChain().Create();
 
-            switch (result)
-            {
-                case ParsingResult.Success success:
-                    ICommand command = success.Command;
+        ICommandParserLink treeSubChain = new TreeListCommandParserLink(parameters, treeWriter)
+                                              .AddNext(new GoToCommandParserLink());
 
-                    if (command is TreeListCommand treeListCommand)
-                    {
-                        var parameters = new FormattingTreeParameters("*", "$", "|||");
-                        treeListCommand.Parameters = parameters;
-                        treeListCommand.Writer = writer;
-                    }
+        ICommandParserLink commandChain = new ConnectCommandParserLink()
+                                                .AddNext(new FileCommandParserLink(fileSubChain))
+                                                .AddNext(new TreeCommandParserLink(treeSubChain))
+                                                .AddNext(new DisconnectCommandParserLink());
 
-                    CommandResult commandResult = success.Command.Execute(controller);
+        var parser = new Parser(commandChain);
+        var appRunner = new AppRunner(parser);
 
-                    if (commandResult is CommandResult.Success commandSuccess)
-                    {
-                        Console.WriteLine("Command successfully executed");
-                    }
-                    else if (commandResult is CommandResult.Failure commandFailure)
-                    {
-                        Console.WriteLine(commandFailure.Error.Message());
-                    }
-                    else
-                    {
-                        Console.WriteLine("Unknown command result");
-                    }
-
-                    break;
-                case ParsingResult.Failure failure:
-                    Console.WriteLine(failure.Error.Message());
-                    break;
-                default:
-                    Console.WriteLine("Unknown parsing result");
-                    break;
-            }
-        }
+        appRunner.Run();
     }
 }

@@ -12,6 +12,8 @@ public sealed class CopyFileParserFactory : ICommandParserFactory
 
         IFlagApplierLink<CopyFileCommandBuilder>? flagChain = null;
 
-        return new CommandParser<CopyFileCommandBuilder>(positionalChain, flagChain);
+        var builder = new CopyFileCommandBuilder();
+
+        return new CommandParser<CopyFileCommandBuilder>(builder, positionalChain, flagChain);
     }
 }

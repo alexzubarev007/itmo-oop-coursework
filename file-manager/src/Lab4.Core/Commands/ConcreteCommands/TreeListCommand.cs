@@ -9,16 +9,18 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ConcreteCommands;
 
 public sealed class TreeListCommand : ICommand
 {
-    public TreeListCommand(int depth)
+    private readonly FormattingTreeParameters _parameters;
+
+    private readonly IWriter _writer;
+
+    public TreeListCommand(int depth, IWriter writer, FormattingTreeParameters parameters)
     {
         Depth = depth;
+        _parameters = parameters;
+        _writer = writer;
     }
 
     public int Depth { get; }
-
-    public FormattingTreeParameters? Parameters { get; set; }
-
-    public IWriter? Writer { get; set; }
 
     public CommandResult Execute(FileSystemController controller)
     {
@@ -31,19 +33,13 @@ public sealed class TreeListCommand : ICommand
 
         var component = new DirectoryFileSystemComponent(fileSystem, controller.ConnectionPath);
 
-        if ((Parameters is null) ||
-            Writer is null)
-        {
-            return new CommandResult.Failure(new WritingError());
-        }
-
-        var visitor = new TreeFormattingFileSystemComponentVisitor(Parameters, Depth);
+        var visitor = new TreeFormattingFileSystemComponentVisitor(_parameters, Depth);
 
         component.Accept(visitor);
 
         string treeText = visitor.TreeStringBuilder.ToString();
 
-        Writer.Write(treeText);
+        _writer.Write(treeText);
 
         return new CommandResult.Success();
     }

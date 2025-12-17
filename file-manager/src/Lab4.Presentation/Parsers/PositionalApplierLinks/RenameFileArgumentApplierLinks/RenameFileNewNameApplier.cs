@@ -7,7 +7,6 @@ public sealed class RenameFileNewNameApplier
 {
     public override bool TryApply(RenameFileCommandBuilder builder, IEnumerator<string> current)
     {
-        Console.WriteLine("Here...");
         if (!current.MoveNext())
         {
             return false;

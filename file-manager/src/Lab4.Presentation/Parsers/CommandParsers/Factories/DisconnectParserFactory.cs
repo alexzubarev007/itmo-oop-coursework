@@ -10,6 +10,8 @@ public sealed class DisconnectParserFactory : ICommandParserFactory
 
         IFlagApplierLink<DisconnectCommandBuilder>? flagChain = null;
 
-        return new CommandParser<DisconnectCommandBuilder>(positionalChain, flagChain);
+        var builder = new DisconnectCommandBuilder();
+
+        return new CommandParser<DisconnectCommandBuilder>(builder, positionalChain, flagChain);
     }
 }

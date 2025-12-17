@@ -11,6 +11,8 @@ public sealed class GoToParserFactory : ICommandParserFactory
 
         IFlagApplierLink<GoToCommandBuilder>? flagChain = null;
 
-        return new CommandParser<GoToCommandBuilder>(positional, flagChain);
+        var builder = new GoToCommandBuilder();
+
+        return new CommandParser<GoToCommandBuilder>(builder, positional, flagChain);
     }
 }

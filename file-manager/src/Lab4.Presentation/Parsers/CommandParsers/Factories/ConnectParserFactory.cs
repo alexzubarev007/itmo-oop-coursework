@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.Factories;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemFactoryLinks;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.FlagApplierLinks.ConnectFlagAppliers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Parsers.PositionalApplierLinks.ConnectArgumentApplierLinks;
@@ -12,6 +13,9 @@ public sealed class ConnectParserFactory : ICommandParserFactory
         var positionalChain = new ConnectConnectionPathApplier();
         var flagChain = new FileSystemModeFlagApplier(new LocalFileSystemFactoryLink());
 
-        return new CommandParser<ConnectCommandBuilder>(positionalChain, flagChain);
+        ConnectCommandBuilder builder = new ConnectCommandBuilder()
+                      .WithFileSystemFactory(new LocalFileSystemFactory());
+
+        return new CommandParser<ConnectCommandBuilder>(builder, positionalChain, flagChain);
     }
 }

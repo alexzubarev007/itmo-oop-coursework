@@ -26,8 +26,6 @@ public sealed class DepthFlagApplier : FlagApplierLinkBase<TreeListCommandBuilde
             return false;
         }
 
-        Console.WriteLine("Big success");
-
         builder.WithDepth(depth);
         return true;
     }

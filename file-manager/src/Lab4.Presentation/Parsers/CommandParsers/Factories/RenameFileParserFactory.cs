@@ -12,6 +12,8 @@ public sealed class RenameFileParserFactory : ICommandParserFactory
 
         IFlagApplierLink<RenameFileCommandBuilder>? flagChain = null;
 
-        return new CommandParser<RenameFileCommandBuilder>(positionalChain, flagChain);
+        var builder = new RenameFileCommandBuilder();
+
+        return new CommandParser<RenameFileCommandBuilder>(builder, positionalChain, flagChain);
     }
 }

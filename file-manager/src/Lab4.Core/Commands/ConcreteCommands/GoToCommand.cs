@@ -24,7 +24,7 @@ public sealed class GoToCommand : ICommand
         string fullPath = fileSystem
             .GetFullPath(controller.ConnectionPath, controller.LocalPath, NewPath);
 
-        if (!fileSystem.DirectoryExists(NewPath))
+        if (!fileSystem.DirectoryExists(fullPath))
         {
             return new CommandResult.Failure(new NonExistPathError());
         }

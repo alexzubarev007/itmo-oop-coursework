@@ -67,7 +67,7 @@ public sealed class LocalFileSystem : IFileSystem
         return Path.GetFileName(fullPath);
     }
 
-    public string GetFullPath(string connectionPath,  string localPath, string currentPath)
+    public string GetFullPath(string connectionPath, string localPath, string currentPath)
     {
         string unitedPath;
 

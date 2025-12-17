@@ -7,7 +7,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.Builders;
 public sealed class ConnectCommandBuilder : ICommandBuilder
 {
     private string? _connectionPath;
-    private IFileSystemFactory _fileSystemFactory = new LocalFileSystemFactory();
+    private IFileSystemFactory? _fileSystemFactory;
 
     public ConnectCommandBuilder WithConnectionPath(string connectionPath)
     {

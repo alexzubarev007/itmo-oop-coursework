@@ -29,6 +29,7 @@ public sealed class WritingModeFlagApplier
 
         string mode = current.Current;
         IWriter? writer = _writingChain.GetWriterByMode(mode);
+
         if (writer == null)
         {
             return false;

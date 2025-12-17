@@ -11,6 +11,8 @@ public sealed class DeleteFileParserFactory : ICommandParserFactory
 
         IFlagApplierLink<DeleteFileCommandBuilder>? flagChain = null;
 
-        return new CommandParser<DeleteFileCommandBuilder>(positionalChain, flagChain);
+        var builder = new DeleteFileCommandBuilder();
+
+        return new CommandParser<DeleteFileCommandBuilder>(builder, positionalChain, flagChain);
     }
 }
