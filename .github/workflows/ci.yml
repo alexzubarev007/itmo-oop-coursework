@@ -1,0 +1,29 @@
+name: Build and test coursework
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - train-simulator
+          - message-routing
+          - battle-simulator
+          - file-manager
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: dotnet restore ${{ matrix.project }}/${{ matrix.project }}.slnx
+      - run: dotnet build ${{ matrix.project }}/${{ matrix.project }}.slnx -c Release --no-restore
+      - run: dotnet test ${{ matrix.project }}/${{ matrix.project }}.slnx -c Release --no-build --logger trx
